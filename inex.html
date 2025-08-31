@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>EclipseCraft — Season 2 公式サイト</title>
+  <meta name="description" content="EclipseCraft Season 2 — Java / Bedrock (Geyser経由) 対応。参加方法・ステータス・ニュース・ギャラリーを企業レベルで。">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EclipseCraft — Season 2">
+  <meta property="og:description" content="EclipseCraft Season 2 — Java / Bedrock (Geyser経由) 対応">
+  <meta property="og:image" content="/og-image.jpg">
+
+  <!-- Font Awesome (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* ---------- BASE RESET ---------- */
+    :root{
+      --bg:#0b1017;
+      --panel:#0f141b;
+      --muted:#9db1c7;
+      --text:#e6edf6;
+      --brand-1:#34d399;
+      --brand-2:#22d3ee;
+      --accent:#a78bfa;
+      --border:rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.5);
+      --radius:14px;
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, 'Noto Sans JP', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    code{background:rgba(255,255,255,.03);padding:.2rem .45rem;border-radius:6px;font-family:ui-monospace,monospace;font-size:.95em}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+    /* ---------- HEADER ---------- */
+    header.site{position:sticky;top:0;z-index:80;background:linear-gradient(180deg, rgba(7,12,18,.7), rgba(7,12,18,.55));backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));display:grid;place-items:center;box-shadow:0 8px 24px rgba(34,211,238,.06)}
+    .brand .title{font-weight:800;letter-spacing:.3px}
+    nav.links{display:flex;gap:18px;align-items:center}
+    nav.links a{font-size:14px;color:#cfe8f8;display:inline-flex;gap:8px;align-items:center;padding:8px;border-radius:10px}
+    nav.links a:hover{background:rgba(255,255,255,.02)}
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#041018;border:none;font-weight:700}
+    .hamburger{display:none;background:transparent;border:none;color:var(--text);font-size:18px;padding:8px;border-radius:10px}
+    @media(max-width:980px){nav.links{display:none}.hamburger{display:inline-flex}}
+
+    /* ---------- HERO ---------- */
+    .hero{padding:80px 0 48px;position:relative}
+    .hero-inner{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.12);color:var(--brand-1);font-weight:700}
+    h1.hero-title{font-size: clamp(30px, 5vw, 48px);margin:12px 0 10px;line-height:1.02}
+    p.lead{color:var(--muted);max-width:60ch}
+    .hero-cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border-radius:16px;padding:18px;border:1px solid var(--border);box-shadow:var(--shadow)}
+
+    /* ---------- SECTIONS ---------- */
+    section{padding:56px 0}
+    h2.section{margin:0 0 14px}
+    p.section-desc{color:var(--muted);margin:0 0 24px}
+
+    /* FEATURES */
+    .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    @media(max-width:1100px){.feature-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.feature-grid{grid-template-columns:1fr}}
+    .feature{padding:18px;border-radius:12px;background:var(--panel);border:1px solid var(--border)}
+    .feature .icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(52,211,153,.12), rgba(34,211,238,.12));border:1px solid rgba(255,255,255,.06)}
+
+    /* TIMELINE */
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    @media(max-width:980px){.timeline{grid-template-columns:1fr}}
+    .step{padding:16px;border-radius:12px;background:var(--panel);border:1px solid var(--border)}
+
+    /* STATUS/JOIN */
+    .status-wrap{display:grid;grid-template-columns:1fr 380px;gap:18px}
+    @media(max-width:980px){.status-wrap{grid-template-columns:1fr}}
+    .status-box{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border:1px solid var(--border)}
+    .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .stat-cell{padding:12px;border-radius:10px;background:var(--panel);border:1px solid var(--border)}
+
+    .addr{display:inline-flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid var(--border);font-family:ui-monospace,monospace}
+
+    /* NEWS/STAFF */
+    .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:980px){.news-grid{grid-template-columns:1fr}}
+    .news-item{padding:16px;border-radius:12px;background:var(--panel);border:1px solid var(--border)}
+    .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:900px){.staff-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.staff-grid{grid-template-columns:1fr}}
+
+    /* GALLERY */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:960px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.gallery-grid{grid-template-columns:1fr}}
+    .gal-item{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent)}
+    .gal-item img{width:100%;height:260px;object-fit:cover;transition:transform .35s ease}
+    .gal-item:hover img{transform:scale(1.04)}
+    .gal-caption{position:absolute;left:12px;bottom:12px;background:linear-gradient(90deg, rgba(7,12,18,.6), rgba(7,12,18,.3));padding:8px 10px;border-radius:8px;font-size:13px}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.8);z-index:120}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:min(92vw,1100px);max-height:86vh;border-radius:12px;border:1px solid var(--border)}
+    .lightbox .meta{position:absolute;top:24px;right:24px;color:var(--muted);font-size:13px}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:28px 0;background:#071018;color:var(--muted);text-align:center}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <!-- CONFIG (編集はここだけでOK) -->
+  <script>
+    window.ECLIPSE = {
+      SERVER_HOST: 'mc.green-nova.net',
+      SERVER_PORT: 2073,
+      // If you prefer, you can set MC_STATUS_ENDPOINT to your own API that returns the same shape.
+      // Leaving null will use api.mcstatus.io v2 default endpoint constructed below.
+      MC_STATUS_ENDPOINT: null,
+      DISCORD_INVITE: 'https://discord.gg/yourinvite'
+    };
+  </script>
+
+  <!-- HEADER -->
+  <header class="site">
+    <div class="container nav">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true"><i class="fa-solid fa-crown" style="color:#041018;font-size:18px"></i></div>
+        <div>
+          <div class="title">EclipseCraft</div>
+          <div style="font-size:12px;color:var(--muted)">Season 2 Official</div>
+        </div>
+      </div>
+
+      <nav class="links" aria-label="Global">
+        <a href="#features"><i class="fa-solid fa-star"></i> 特徴</a>
+        <a href="#timeline"><i class="fa-regular fa-calendar-days"></i> スケジュール</a>
+        <a href="#status"><i class="fa-solid fa-signal"></i> ステータス</a>
+        <a href="#news"><i class="fa-regular fa-newspaper"></i> ニュース</a>
+        <a href="#gallery"><i class="fa-solid fa-image"></i> ギャラリー</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn" onclick="copyAddress()" aria-label="Copy address"><i class="fa-solid fa-copy"></i> コピー</button>
+        <a class="btn primary" href="#join"><i class="fa-solid fa-play"></i> 今すぐ参加</a>
+        <button class="hamburger" aria-label="open menu" onclick="toggleMobile()"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div id="mobileMenu" style="display:none;background:linear-gradient(180deg, rgba(7,12,18,.96), rgba(7,12,18,.98));border-bottom:1px solid var(--border);position:sticky;top:72px;z-index:79;">
+    <div class="container" style="display:grid;gap:8px;padding:12px 0">
+      <a href="#features">特徴</a>
+      <a href="#timeline">スケジュール</a>
+      <a href="#status">ステータス</a>
+      <a href="#news">ニュース</a>
+      <a href="#gallery">ギャラリー</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="reveal">
+          <span class="badge"><i class="fa-solid fa-rocket"></i> Season 2 開幕</span>
+          <h1 class="hero-title">みんなで創る、<span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;color:transparent">次世代サバイバル</span></h1>
+          <p class="lead">EclipseCraft は、透明性の高い運営と長期稼働を目指すコミュニティ型 Minecraft サーバーです。Java / 統合版どちらでも遊べます（統合版：Geyser 経由）。</p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#join"><i class="fa-solid fa-gamepad"></i> サーバーへ参加</a>
+            <a class="btn" href="#features"><i class="fa-solid fa-circle-info"></i> 詳細を見る</a>
+            <a class="btn" href="#" onclick="window.open(window.ECLIPSE.DISCORD_INVITE, '_blank')"><i class="fa-brands fa-discord"></i> Discord</a>
+          </div>
+        </div>
+
+        <aside class="hero-card reveal" aria-hidden="false">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:700;display:flex;gap:10px;align-items:center"><i class="fa-solid fa-chart-line"></i> 今週のアクティブ（例）</div>
+            <div style="color:var(--muted);font-size:13px">モックデータ</div>
+          </div>
+
+          <!-- Simple inline SVG sparkline -->
+          <div style="margin-top:12px">
+            <svg width="100%" height="100" viewBox="0 0 520 100" preserveAspectRatio="none" aria-hidden>
+              <defs>
+                <linearGradient id="gA" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#34d399" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.05" />
+                </linearGradient>
+              </defs>
+              <polyline fill="url(#gA)" stroke="none" points="0,80 60,72 120,62 180,68 240,56 300,36 360,44 420,28 480,22 520,30 520,100 0,100"></polyline>
+              <polyline fill="none" stroke="#7ee7c2" stroke-width="2" points="0,80 60,72 120,62 180,68 240,56 300,36 360,44 420,28 480,22 520,30"></polyline>
+            </svg>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            <div class="addr" id="display-addr" role="status" aria-live="polite">mc.green-nova.net:2073</div>
+            <button class="btn" onclick="copyAddress()"><i class="fa-solid fa-copy"></i> コピー</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="container">
+        <h2 class="section">サーバーの特徴</h2>
+        <p class="section-desc">安定運用・公平なルール・コミュニティ参加型の開発サイクル。企業レベルの運営クオリティを目指します。</p>
+
+        <div class="feature-grid reveal">
+          <article class="feature">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="icon"><i class="fa-solid fa-shield-halved" style="font-size:20px;color:var(--brand-1)"></i></div>
+              <div>
+                <h4 style="margin:0 0 6px">高可用性 & 監査</h4>
+                <p class="muted" style="margin:0">バックアップ、監査ログ、DDoS対策を実装。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="icon"><i class="fa-solid fa-gear" style="font-size:20px;color:var(--brand-2)"></i></div>
+              <div>
+                <h4 style="margin:0 0 6px">最新基盤</h4>
+                <p class="muted" style="margin:0">Paper / Velocity / Redis で低遅延を追求。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="icon"><i class="fa-solid fa-people-group" style="font-size:20px;color:var(--accent)"></i></div>
+              <div>
+                <h4 style="margin:0 0 6px">コミュニティ主導</h4>
+                <p class="muted" style="margin:0">提案制度・投票で開発優先度を決定します。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="icon"><i class="fa-solid fa-calendar-day" style="font-size:20px;color:#ffd166"></i></div>
+              <div>
+                <h4 style="margin:0 0 6px">季節イベント</h4>
+                <p class="muted" style="margin:0">定期イベントでコミュニティを活性化。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="container">
+        <h2 class="section">スケジュール</h2>
+        <p class="section-desc">主要マイルストーン（予定はDiscordで告知）</p>
+        <div class="timeline reveal">
+          <div class="step"><small class="muted">2025-09-05</small><h4 style="margin:6px 0">クローズドテスト</h4><p class="muted" style="margin:0">限定メンバーで最終検証。</p></div>
+          <div class="step"><small class="muted">2025-09-10</small><h4 style="margin:6px 0">公式サイト公開</h4><p class="muted" style="margin:0">このページの公開。</p></div>
+          <div class="step"><small class="muted">2025-09-15</small><h4 style="margin:6px 0">S2 ローンチ</h4><p class="muted" style="margin:0">誰でも参加可能。</p></div>
+          <div class="step"><small class="muted">2025-10</small><h4 style="margin:6px 0">大型アップデート</h4><p class="muted" style="margin:0">新ダンジョン等を実装。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATUS & JOIN -->
+    <section id="status">
+      <div class="container status-wrap">
+        <div class="status-box reveal">
+          <h2 class="section">サーバーステータス</h2>
+          <p class="section-desc">外部 API からライブで取得します。CORS 設定が必要な場合は自分のプロキシを使ってください。</p>
+
+          <div class="stat-grid" style="margin-top:12px">
+            <div class="stat-cell">
+              <div class="muted" style="font-size:13px">オンライン</div>
+              <div id="mc-online" style="font-weight:700;margin-top:8px">読み込み中…</div>
+            </div>
+            <div class="stat-cell">
+              <div class="muted" style="font-size:13px">プレイヤー</div>
+              <div id="mc-players" style="font-weight:700;margin-top:8px">—</div>
+            </div>
+            <div class="stat-cell">
+              <div class="muted" style="font-size:13px">レイテンシ</div>
+              <div id="mc-latency" style="font-weight:700;margin-top:8px">—</div>
+            </div>
+            <div class="stat-cell">
+              <div class="muted" style="font-size:13px">バージョン</div>
+              <div id="mc-version" style="font-weight:700;margin-top:8px">—</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,.01), transparent);border:1px solid var(--border)">
+            <div class="muted" style="font-size:13px">取得元: <code id="status-source">api.mcstatus.io</code>（問題がある場合は独自のステータスエンドポイントを指定してください）</div>
+          </div>
+        </div>
+
+        <aside class="status-box reveal" id="join">
+          <h2 class="section">参加方法</h2>
+          <p class="muted" style="margin-top:6px">Java / 統合版（Geyser 経由）共通アドレス</p>
+
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <div><strong>サーバー</strong>：<span class="addr" id="addr-display">mc.green-nova.net:2073</span></div>
+            <div><strong>対応</strong>：Java 1.20+ / Bedrock (統合版 via Geyser)</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn" onclick="copyAddress()"><i class="fa-solid fa-copy"></i> アドレスをコピー</button>
+              <a class="btn" href="#" onclick="window.open(window.ECLIPSE.DISCORD_INVITE,'_blank')"><i class="fa-brands fa-discord"></i> Discord で申請</a>
+            </div>
+            <div class="muted" style="font-size:13px">※ ホワイトリスト制の場合は先にDiscordで申請してください。</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news">
+      <div class="container">
+        <h2 class="section">ニュース</h2>
+        <p class="section-desc">運営からの告知やアップデート情報を掲載します。</p>
+
+        <div class="news-grid reveal" style="margin-top:12px">
+          <article class="news-item">
+            <div class="muted" style="font-size:13px">2025-08-31</div>
+            <h4 style="margin:8px 0">Season 2 ローンチ告知</h4>
+            <p class="muted" style="margin:0">ローンチ日程と主要な変更点を告知しました。詳細はDiscordへ。</p>
+          </article>
+
+          <article class="news-item">
+            <div class="muted" style="font-size:13px">2025-08-28</div>
+            <h4 style="margin:8px 0">提案制度 v2 公開</h4>
+            <p class="muted" style="margin:0">提案〜投票〜実装のフローを明確化しました。</p>
+          </article>
+
+          <article class="news-item">
+            <div class="muted" style="font-size:13px">2025-08-24</div>
+            <h4 style="margin:8px 0">アンチチート強化</h4>
+            <p class="muted" style="margin:0">不正検知ルールと監査ログの保存期間を更新しました。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAFF -->
+    <section id="staff">
+      <div class="container">
+        <h2 class="section">運営・スタッフ</h2>
+        <p class="section-desc">透明でフレンドリーな運営を行います。</p>
+
+        <div class="staff-grid reveal" style="margin-top:12px">
+          <div style="padding:12px;border-radius:10px;background:var(--panel);border:1px solid var(--border);display:flex;gap:12px;align-items:center">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));display:grid;place-items:center;font-weight:800">GN</div>
+            <div><strong>Guren Nova</strong><div class="muted" style="font-size:13px">Founder / Lead</div></div>
+          </div>
+
+          <div style="padding:12px;border-radius:10px;background:var(--panel);border:1px solid var(--border);display:flex;gap:12px;align-items:center">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));display:grid;place-items:center;font-weight:800">NB</div>
+            <div><strong>NoBa-chan</strong><div class="muted" style="font-size:13px">Discord Bot</div></div>
+          </div>
+
+          <div style="padding:12px;border-radius:10px;background:var(--panel);border:1px solid var(--border);display:flex;gap:12px;align-items:center">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));display:grid;place-items:center;font-weight:800">ST</div>
+            <div><strong>Support Team</strong><div class="muted" style="font-size:13px">Moderation</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="section">ギャラリー</h2>
+        <p class="section-desc">サーバー内のスクリーンショット。クリックで拡大表示します。</p>
+
+        <div class="gallery-grid reveal" style="margin-top:12px">
+          <!-- Replace these image URLs with your actual screenshots -->
+          <figure class="gal-item" tabindex="0" data-src="https://images.unsplash.com/photo-1547691889-841a6f1c5ca6?q=80&w=1600&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1547691889-841a6f1c5ca6?q=80&w=1600&auto=format&fit=crop" alt="サーバー風景 1" loading="lazy">
+            <figcaption class="gal-caption">ワールド風景 — 1</figcaption>
+          </figure>
+
+          <figure class="gal-item" tabindex="0" data-src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1600&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1600&auto=format&fit=crop" alt="サーバー風景 2" loading="lazy">
+            <figcaption class="gal-caption">拠点スクリーン — 2</figcaption>
+          </figure>
+
+          <figure class="gal-item" tabindex="0" data-src="https://images.unsplash.com/photo-1495578942200-c5f5d2137ed8?q=80&w=1600&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1495578942200-c5f5d2137ed8?q=80&w=1600&auto=format&fit=crop" alt="サーバー風景 3" loading="lazy">
+            <figcaption class="gal-caption">ダンジョン風味 — 3</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <div style="position:relative;max-width:92vw;width:100%">
+      <img id="lightbox-img" src="" alt="拡大画像">
+      <div class="meta" style="position:absolute;top:16px;right:16px;color:var(--muted);font-size:13px">
+        <button class="btn" onclick="downloadLightboxImage()" title="Download"><i class="fa-solid fa-download"></i></button>
+        <button class="btn" onclick="closeLightbox()" title="Close" style="margin-left:8px"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <strong>EclipseCraft</strong><div style="font-size:13px;color:var(--muted)">Season 2 — みんなで創るサーバー</div>
+      </div>
+      <div style="color:var(--muted);font-size:13px">お問い合わせ: <a href="mailto:contact@eclipsecraft.jp">contact@eclipsecraft.jp</a></div>
+      <div style="color:var(--muted);font-size:13px">© <span id="year"></span> EclipseCraft</div>
+    </div>
+  </footer>
+
+  <!-- JSON-LD (structured data) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"GameServer",
+    "name":"EclipseCraft",
+    "game":"Minecraft",
+    "url":"https://example.com",
+    "serverStatus":{"@type":"Thing","name":"mc.green-nova.net:2073"}
+  }
+  </script>
+
+  <!-- SCRIPTS -->
+  <script>
+    // --- initialization
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // set displayed address to config (single source of truth)
+    const HOST = window.ECLIPSE && window.ECLIPSE.SERVER_HOST ? window.ECLIPSE.SERVER_HOST : 'mc.green-nova.net';
+    const PORT = window.ECLIPSE && window.ECLIPSE.SERVER_PORT ? window.ECLIPSE.SERVER_PORT : 2073;
+    const ADDR = HOST + (PORT ? ':' + PORT : '');
+    document.getElementById('addr-display').textContent = ADDR;
+    document.getElementById('display-addr').textContent = ADDR;
+
+    // Mobile toggle
+    function toggleMobile(){
+      const m = document.getElementById('mobileMenu');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Copy address
+    function copyAddress(){
+      navigator.clipboard?.writeText(ADDR).then(()=> {
+        // small in-page feedback
+        const btns = document.querySelectorAll('.btn');
+        alert('アドレスをコピーしました: ' + ADDR);
+      }).catch(()=> {
+        alert('コピーに失敗しました。手動でコピーしてください。');
+      });
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    function openLightbox(src){
+      lbImg.src = src;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+    function downloadLightboxImage(){
+      if(!lbImg.src) return;
+      const a = document.createElement('a');
+      a.href = lbImg.src;
+      a.download = 'eclipsecraft-screenshot';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    document.querySelectorAll('.gal-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const src = el.dataset.src || el.querySelector('img')?.src;
+        if(src) openLightbox(src);
+      });
+      // keyboard accessible
+      el.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const src = el.dataset.src || el.querySelector('img')?.src; if(src) openLightbox(src); } });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if(e.target === lightbox) closeLightbox();
+    });
+
+    // Reveal on scroll (simple)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.classList.add('visible'); io.unobserve(entry.target); }
+      });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // --- Server status fetching (uses api.mcstatus.io v2)
+    // You can override window.ECLIPSE.MC_STATUS_ENDPOINT to your own proxy/endpoint (CORS)
+    async function fetchServerStatus(){
+      const containerOnline = document.getElementById('mc-online');
+      const containerPlayers = document.getElementById('mc-players');
+      const containerLatency = document.getElementById('mc-latency');
+      const containerVersion = document.getElementById('mc-version');
+      const sourceEl = document.getElementById('status-source');
+
+      // choose endpoint
+      const custom = window.ECLIPSE && window.ECLIPSE.MC_STATUS_ENDPOINT;
+      let endpoint;
+      if(custom && typeof custom === 'string' && custom.trim().length) {
+        endpoint = custom;
+        sourceEl.textContent = new URL(custom).host;
+      } else {
+        // mcstatus.io v2 endpoint for Java edition:
+        // format: https://api.mcstatus.io/v2/status/java/{host}:{port}
+        endpoint = `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(HOST + ':' + PORT)}`;
+        sourceEl.textContent = 'api.mcstatus.io';
+      }
+
+      try {
+        containerOnline.textContent = '読み込み中…';
+        const resp = await fetch(endpoint, { cache: 'no-store' });
+        if(!resp.ok) throw new Error('fetch failed: ' + resp.status);
+        const json = await resp.json();
+
+        // mcstatus.io returns { online: boolean, players: {...}, version: {...}, latency: ... } — be defensive
+        const online = !!(json && json.online);
+        containerOnline.textContent = online ? 'オンライン' : 'オフライン';
+        containerOnline.style.color = online ? '#22c55e' : '#ef4444';
+
+        // players may be in json.players or json.players.online etc
+        let playersText = '—';
+        if(json.players) {
+          const p = json.players;
+          if(typeof p.online === 'number' && typeof p.max === 'number') playersText = `${p.online} / ${p.max}`;
+          else if(typeof p.online === 'number') playersText = `${p.online}`;
+        } else if(json.players_online !== undefined) {
+          playersText = String(json.players_online);
+        }
+        containerPlayers.textContent = playersText;
+
+        // latency: mcstatus returns latency in ms sometimes under 'latency' or 'round_trip'
+        let latencyText = '—';
+        if(json.latency) latencyText = `${json.latency} ms`;
+        else if(json.round_trip) latencyText = `${json.round_trip} ms`;
+        containerLatency.textContent = latencyText;
+
+        // version: json.version.name or json.version.name_clean etc
+        let ver = '—';
+        if(json.version && (json.version.name_clean || json.version.name)) ver = json.version.name_clean || json.version.name;
+        else if(json.software && json.software.name) ver = json.software.name;
+        containerVersion.textContent = ver;
+      } catch(err) {
+        console.warn('status fetch error', err);
+        containerOnline.textContent = '取得失敗';
+        containerOnline.style.color = 'var(--muted)';
+        containerPlayers.textContent = '—';
+        containerLatency.textContent = '—';
+        containerVersion.textContent = '—';
+        document.getElementById('status-source').textContent = '取得失敗';
+      }
+    }
+
+    // Kick things off
+    fetchServerStatus();
+    // refresh every 30s
+    setInterval(fetchServerStatus, 30000);
+  </script>
+</body>
+</html>
